@@ -8,3 +8,7 @@ tasks:
       echo "You can create GitHub Actions Runner from here: "
       echo "You can create one easily using with this command: source create-runner.sh <your_preffered_runner_name>"
       echo "For example: source create-runner.sh siddhant-demo-runner-01"
+- name: Start Docker Compose
+    before: |
+      docker-compose build --pull
+      docker-compose up -d
