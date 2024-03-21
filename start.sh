@@ -6,14 +6,15 @@ ACCESS_TOKEN=$TOKEN
 echo "REPO ${REPOSITORY}"
 echo "ACCESS_TOKEN ${ACCESS_TOKEN}"
 
-RUNNER_SUFFIX=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 5 | head -n 1)
+# RUNNER_SUFFIX=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 5 | head -n 1)
 RUNNER_NAME="gitpod-hosted-node-${RUNNER_SUFFIX}"
 
 REG_TOKEN=$(curl -X POST -H "Authorization: token ${ACCESS_TOKEN}" -H "Accept: application/vnd.github+json" https://api.github.com/repos/${REPOSITORY}/actions/runners/registration-token | jq .token --raw-output)
 
 cd /home/docker/actions-runner
 
-./config.sh --unattended --url https://github.com/${REPOSITORY} --token ${REG_TOKEN} --name ${RUNNER_NAME}
+./config.sh --unattended --url https://github.com/${REPOSITORY} --token ${REG_TOKEN}
+# ./config.sh --unattended --url https://github.com/${REPOSITORY} --token ${REG_TOKEN} --name ${RUNNER_NAME}
 
 cleanup() {
     echo "Removing runner..."
